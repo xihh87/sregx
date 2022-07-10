@@ -139,3 +139,19 @@ func TestICapitalizeAlternate(t *testing.T) {
 
 	check(cmd, tests, t)
 }
+
+func TestUnicodeInRegx(t *testing.T) {
+    cmd := sregx.X {
+        Patt: regexp.MustCompile("- +\\[ \\] "),
+        Cmd: sregx.C{
+            Change: []byte("- ☐ "),
+        },
+    }
+
+    tests := []Test{
+        {"pending1", "- [ ] ", "- ☐ "},
+        {"pending2", "-     [ ] ", "- ☐ "},
+    }
+
+    check(cmd, tests, t)
+}
